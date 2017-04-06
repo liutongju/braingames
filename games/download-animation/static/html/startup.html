@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-  <!-- <div id="stat">Loading...</div> -->
   <div id="video-wrapper">
     <div id="download-now" class="interaction"></div>
     <div id="save-file" class="interaction"></div>
@@ -22,17 +21,22 @@
     <div id="library-doorhanger"></div>
     <div id="download-doorhanger"></div>
     <video id="video-test" preload="auto" width="1366" height="768"></video>
+    <div id="step-complete" class="hidden">
+      <h1>Animation completed!</h1>
+      <p>Press "Next" on the usertesting.com</p>
+      <p>instructions menu to continue</p>
+    </div>
   <div>
 
   <script type="text/javascript">
     let vid = document.getElementById('video-test');
-    // var status = document.getElementById('stat');
     let download_now = document.getElementById('download-now');
     let save_file = document.getElementById('save-file');
     let video_wrapper = document.getElementById('video-wrapper');
     let bookmark = document.getElementById('bookmark');
     let library = document.getElementById('library');
     let downloads = document.getElementById('downloads');
+    let step_complete = document.getElementById('step-complete');
 
     function oneTime(node, type, callback) {
     	node.addEventListener(type, function(e) {
@@ -51,17 +55,20 @@
         let videoBlob = this.response;
         let v = URL.createObjectURL(videoBlob);
         vid.src = v;
-        // stat.classList.add('hidden');
-        // vid.classList.remove('hidden');
-        // play.classList.remove('hidden');
       }
     };
 
-    req.onerror = () => {
-        // stat.innerText = 'Could not load experiment';
-    };
-
     req.send();
+
+    let stepComplete = function(callback) {
+      setTimeout(function() {
+        step_complete.classList.remove('hidden');
+        oneTime(step_complete, 'click', function(e) {
+            step_complete.classList.add('hidden');
+            callback();
+        });
+      }, 1000);
+    }
 
     let showHint = function (e)  {
       this.children[0].classList.remove('hidden');
@@ -78,6 +85,55 @@
     library.addEventListener('mouseout', hideHint);
     downloads.addEventListener('mouseout', hideHint);
 
+    let downloadsClick = function() {
+      oneTime(downloads, 'click', function() {
+        vid.play();
+        setTimeout(function(){
+          vid.pause();
+          vid.currentTime = 7;
+          video_wrapper.addEventListener('click', function(e) {
+            if (e.target.id != 'download-doorhanger') {
+              video_wrapper.removeEventListener('click', arguments.callee);
+              document.getElementById('download-doorhanger').classList.add('hidden');
+              vid.play();
+              setTimeout(function() {
+                vid.pause();
+                vid.currentTime = 8;
+                oneTime(bookmark, 'click', function(){
+                  vid.play();
+                  setTimeout(function() {
+                    vid.pause();
+                    vid.currentTime = 11;
+                    stepComplete(libraryClick);
+                  }, 2300);
+                });
+              }, 1000);
+            }
+          });
+        }, 900);
+      });
+    }
+
+    let libraryClick = function() {
+      oneTime(library, 'click', function(){
+        vid.play();
+        setTimeout(function() {
+          vid.pause();
+          vid.currentTime = 12;
+          video_wrapper.addEventListener('click', function(e) {
+            if (e.target.id != 'library-doorhanger') {
+              document.getElementById('library-doorhanger').classList.add('hidden');
+              video_wrapper.removeEventListener('click', arguments.callee);
+              vid.play();
+              setTimeout(function() {
+                vid.pause(); // Video is finished
+              }, 1500);
+            }
+          });
+        }, 800);
+      });
+    }
+
     oneTime(download_now, 'click', () => {
       download_now.classList.add('hidden');
       vid.currentTime = 1;
@@ -90,54 +146,9 @@
         vid.pause();
         downloads.classList.remove('hidden');
         vid.currentTime = 6;
+        stepComplete(downloadsClick);
       }, 3500);
     });
-
-    oneTime(downloads, 'click', function() {
-      vid.play();
-      setTimeout(function(){
-        vid.pause();
-        vid.currentTime = 7;
-        video_wrapper.addEventListener('click', function(e) {
-          if (e.target.id != 'download-doorhanger') {
-            video_wrapper.removeEventListener('click', arguments.callee);
-            document.getElementById('download-doorhanger').classList.add('hidden');
-            vid.play();
-            setTimeout(function() {
-              vid.pause();
-              vid.currentTime = 8;
-            }, 1000);
-          }
-        });
-      }, 900);
-    });
-
-    oneTime(bookmark, 'click', function(){
-      vid.play();
-      setTimeout(function() {
-        vid.pause();
-        vid.currentTime = 11;
-      }, 2300);
-    });
-
-    oneTime(library, 'click', function(){
-      vid.play();
-      setTimeout(function() {
-        vid.pause();
-        vid.currentTime = 12;
-        video_wrapper.addEventListener('click', function(e) {
-          if (e.target.id != 'library-doorhanger') {
-            document.getElementById('library-doorhanger').classList.add('hidden');
-            video_wrapper.removeEventListener('click', arguments.callee);
-            vid.play();
-            setTimeout(function() {
-              vid.pause(); // Video is finished
-            }, 1500);
-          }
-        });
-      }, 800);
-    });
-
 
   </script>
 </body>

@@ -13,20 +13,19 @@ timeline.push(test_block);
 
 /* start the experiment */
 jsPsych.init({
-  timeline: timeline
-  // fullscreen: true
-  // on_finish: function() {
-  //     $.ajax({
-  //         type: 'post',
-  //         cache: false,
-  //         url: 'datacollector/',
-  //         contentType: 'application/json; charset=utf-8',
-  //         dataType: 'json',
-  //         headers: {
-  //             'X-CSRFToken': '{{  csrf }}'
-  //         },
-  //         data: jsPsych.data.dataAsJSON(),
-  //         success: function(output) { console.log(output); }
-  //     });
-  // }
+  timeline: timeline,
+  on_finish: function() {
+      $.ajax({
+          type: 'post',
+          cache: false,
+          url: 'datacollector/',
+          contentType: 'application/json; charset=utf-8',
+          dataType: 'json',
+          headers: {
+              'X-CSRFToken': '{{ csrf }}'
+          },
+          data: jsPsych.data.dataAsJSON(),
+          success: function(output) { console.log(output); }
+      });
+  }
 });
