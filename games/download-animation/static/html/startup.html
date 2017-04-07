@@ -85,52 +85,14 @@
     library.addEventListener('mouseout', hideHint);
     downloads.addEventListener('mouseout', hideHint);
 
-    let downloadsClick = function() {
-      oneTime(downloads, 'click', function() {
-        vid.play();
-        setTimeout(function(){
-          vid.pause();
-          vid.currentTime = 7;
-          video_wrapper.addEventListener('click', function(e) {
-            if (e.target.id != 'download-doorhanger') {
-              video_wrapper.removeEventListener('click', arguments.callee);
-              document.getElementById('download-doorhanger').classList.add('hidden');
-              vid.play();
-              setTimeout(function() {
-                vid.pause();
-                vid.currentTime = 8;
-                oneTime(bookmark, 'click', function(){
-                  vid.play();
-                  setTimeout(function() {
-                    vid.pause();
-                    vid.currentTime = 11;
-                    stepComplete(libraryClick);
-                  }, 2300);
-                });
-              }, 1000);
-            }
-          });
-        }, 900);
-      });
-    }
-
-    let libraryClick = function() {
-      oneTime(library, 'click', function(){
+    let bookmarksClick = function() {
+      oneTime(bookmark, 'click', function(){
         vid.play();
         setTimeout(function() {
           vid.pause();
-          vid.currentTime = 12;
-          video_wrapper.addEventListener('click', function(e) {
-            if (e.target.id != 'library-doorhanger') {
-              document.getElementById('library-doorhanger').classList.add('hidden');
-              video_wrapper.removeEventListener('click', arguments.callee);
-              vid.play();
-              setTimeout(function() {
-                vid.pause(); // Video is finished
-              }, 1500);
-            }
-          });
-        }, 800);
+          vid.currentTime = 11;
+          stepComplete();
+        }, 2300);
       });
     }
 
@@ -145,9 +107,9 @@
       setTimeout(function() {
         vid.pause();
         downloads.classList.remove('hidden');
-        vid.currentTime = 6;
-        stepComplete(downloadsClick);
-      }, 3500);
+        vid.currentTime = 8;
+        stepComplete(bookmarksClick);
+      }, 4500);
     });
 
   </script>

@@ -16,10 +16,10 @@ body {
 .interaction {
   display: block;
   position: absolute;
-  cursor: pointer;
 }
 
 #download-now {
+  cursor: pointer;
   width: 185px;
   height: 40px;
   top: 569px;
@@ -27,6 +27,7 @@ body {
 }
 
 #save-file {
+  cursor: pointer;
   width: 81px;
   height: 29px;
   top: 378px;
@@ -52,24 +53,6 @@ body {
   height: 26px;
   top: 98px;
   left: 1092px;
-}
-
-#download-doorhanger {
-  display: block;
-  position: absolute;
-  width: 427px;
-  height: 113px;
-  top: 133px;
-  left: 665px;
-}
-
-#library-doorhanger {
-  display: block;
-  position: absolute;
-  width: 324px;
-  height: 483px;
-  top: 133px;
-  left: 799px;
 }
 
 .hint {
