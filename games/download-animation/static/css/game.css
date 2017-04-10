@@ -16,10 +16,10 @@ body {
 .interaction {
   display: block;
   position: absolute;
-  cursor: pointer;
 }
 
 #download-now {
+  cursor: pointer;
   width: 185px;
   height: 40px;
   top: 569px;
@@ -27,6 +27,7 @@ body {
 }
 
 #save-file {
+  cursor: pointer;
   width: 81px;
   height: 29px;
   top: 378px;
@@ -54,24 +55,6 @@ body {
   left: 1092px;
 }
 
-#download-doorhanger {
-  display: block;
-  position: absolute;
-  width: 427px;
-  height: 113px;
-  top: 133px;
-  left: 665px;
-}
-
-#library-doorhanger {
-  display: block;
-  position: absolute;
-  width: 324px;
-  height: 483px;
-  top: 133px;
-  left: 799px;
-}
-
 .hint {
   top: 33px;
   position: absolute;
@@ -82,4 +65,34 @@ body {
   padding: 1px 5px;
   border-radius: 2px;
   left: -6px;
+}
+
+#step-complete {
+  border: black 1px solid;
+  z-index: 5;
+  position: absolute;
+  top: 178px;
+  left: 400px;
+  margin: auto;
+  display: block;
+  width: 400px;
+  background-color: white;
+  padding: 60px;
+  text-align: center;
+  box-shadow: 0px 5px 6px 4px rgba(0,0,0,0.4);
+}
+
+#step-complete p {
+  margin: 0;
+}
+
+#step-complete h1 {
+  font-weight: inherit;
+}
+
+#reset {
+  width: 25px;
+  height: 26px;
+  top: 98px;
+  left: 174px;
 }
