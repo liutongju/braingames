@@ -7,8 +7,9 @@
 </head>
 <body>
   <div id="video-wrapper">
+    <div id="reset" class="interaction"></div>
     <div id="download-now" class="interaction"></div>
-    <div id="save-file" class="interaction"></div>
+    <div id="save-file" class="interaction hidden"></div>
     <div id="bookmark" class="interaction">
       <div class="hint hidden">bookmark</div>
     </div>
@@ -18,8 +19,6 @@
     <div id="library" class="interaction">
       <div class="hint hidden">library</div>
     </div>
-    <div id="library-doorhanger"></div>
-    <div id="download-doorhanger"></div>
     <video id="video-test" preload="auto" width="1366" height="768"></video>
     <div id="step-complete" class="hidden">
       <h1>Animation completed!</h1>
@@ -37,6 +36,8 @@
     let library = document.getElementById('library');
     let downloads = document.getElementById('downloads');
     let step_complete = document.getElementById('step-complete');
+    let reset = document.getElementById('reset');
+    let timeouts = [];
 
     function oneTime(node, type, callback) {
     	node.addEventListener(type, function(e) {
@@ -61,13 +62,13 @@
     req.send();
 
     let stepComplete = function(callback) {
-      setTimeout(function() {
+      timeouts.push(setTimeout(function() {
         step_complete.classList.remove('hidden');
         oneTime(step_complete, 'click', function(e) {
             step_complete.classList.add('hidden');
             callback();
         });
-      }, 1000);
+      }, 1000));
     }
 
     let showHint = function (e)  {
@@ -88,29 +89,49 @@
     let bookmarksClick = function() {
       oneTime(bookmark, 'click', function(){
         vid.play();
-        setTimeout(function() {
+        timeouts.push(setTimeout(function() {
           vid.pause();
           vid.currentTime = 11;
           stepComplete();
-        }, 2300);
+        }, 2300));
       });
     }
 
-    oneTime(download_now, 'click', () => {
-      download_now.classList.add('hidden');
-      vid.currentTime = 1;
-    });
+    let startup = function() {
+      oneTime(download_now, 'click', () => {
+        download_now.classList.add('hidden');
+        save_file.classList.remove('hidden');
+        vid.currentTime = 1;
+      });
 
-    oneTime(save_file, 'click', () => {
+      oneTime(save_file, 'click', () => {
+        save_file.classList.add('hidden');
+        vid.play();
+        timeouts.push(setTimeout(function() {
+          vid.pause();
+          downloads.classList.remove('hidden');
+          vid.currentTime = 8;
+          stepComplete(bookmarksClick);
+        }, 4500));
+      });
+    }
+
+    reset.onclick = function() {
+      bookmark.click();
+      for (var i = 0; i < timeouts.length; i++) {
+          clearTimeout(timeouts[i]);
+      }
+      vid.pause()
+      vid.currentTime = 0;
+      download_now.classList.remove('hidden');
       save_file.classList.add('hidden');
-      vid.play();
-      setTimeout(function() {
-        vid.pause();
-        downloads.classList.remove('hidden');
-        vid.currentTime = 8;
-        stepComplete(bookmarksClick);
-      }, 4500);
-    });
+      downloads.classList.add('hidden');
+      step_complete.classList.add('hidden');
+      timeouts = [];
+      startup();
+    }
+
+    startup();
 
   </script>
 </body>

@@ -89,3 +89,10 @@ body {
 #step-complete h1 {
   font-weight: inherit;
 }
+
+#reset {
+  width: 25px;
+  height: 26px;
+  top: 98px;
+  left: 174px;
+}
