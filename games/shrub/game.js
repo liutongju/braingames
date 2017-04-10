@@ -1,6 +1,9 @@
 // SSI stuff
 var SSI_ids = [jsPsych.data.getURLVariable('psid'), jsPsych.data.getURLVariable('pid')]; // debug with ?psid=<whatever>&pid=test
-var basicCode = 89931;
+var basicCode = 40932;
+
+var cycles = 3;                        // how many iterations per stimulus for proper response averaging
+var score = 0, accY = 100, accN = -50; // keeping score
 
 // for some reason, (try to) shut it down
 function kill(reason) {
@@ -19,28 +22,25 @@ function kill(reason) {
       success: function(output) {
         console.log(output);
         if (SSI_ids[1] == 'test') { throw new Error(reason);
-        } else {  window.location.replace("http://dkr1.ssisurveys.com/projects/end?rst=2&basic="+basicCode+"&psid="+SSI_ids[0]); // URL for SSI redirect
+        } else {  window.location.replace("http://dkr1.ssisurveys.com/projects/end?rst=2&psid="+SSI_ids[0]); // URL for SSI redirect
         }
       }
     });
 }
-// if nothing passed just kill the script - don't waste our time
+// if nothing passed just kill the script
 if (SSI_ids[0] == null || SSI_ids[1] == null) { kill("SSI url variables not present, will not execute study."); }
 
 // check for reload (if there's a cookie they've been here before [admittedly naive assumption])
 if( typeof Cookies.get().ba !== 'undefined' ) {
-  // yes cookie; 
+  // yes cookie
   if (Cookies.getJSON('ba').r >= 1) {
     Cookies.set('ba', {"r": Cookies.getJSON('ba').r += 1});
     kill("Page reload detected, will not continue study; disqualification.");
   } 
 } else {
-  // no cookie, 
+  // no cookie
   if (SSI_ids[1] != 'test') { Cookies.set('ba', {"r":0}); }
 }
-
-var cycles = 3;                        // how many iterations per stimulus for proper response averaging
-var score = 0, accY = 100, accN = -50; // keeping score
 
 // specify all stimuli and levels of related IVs (ps I sorta hate editing this, would rather see it in a spreadsheet?)
 var video_clips = [
@@ -349,8 +349,7 @@ jsPsych.init({
       success: function(output) { 
         console.log(output);
         if (SSI_ids[1] != 'test') {
-          window.location.replace("http://dkr1.ssisurveys.com/projects/end?rst=1&basic="+basicCode+"&psid="+SSI_ids[0]); // URL for SSI redirect
-          // if we HAVE to dq live (not post hoc) I could check eventCounter here and dq when counts exceed some threshold
+          window.location.replace("http://dkr1.ssisurveys.com/projects/end?rst=1&psid="+SSI_ids[0]+"&basic="+basicCode); // URL for SSI redirect
         }
       }
     });
