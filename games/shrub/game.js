@@ -7,25 +7,30 @@ var score = 0, accY = 100, accN = -50; // keeping score
 
 // for some reason, (try to) shut it down
 function kill(reason) {
-  alert(reason);
   jsPsych.data.addProperties({ status: 'disqualified' });
-    $.ajax({
-      type: 'post',
-      cache: false,
-      url: 'datacollector/',
-      contentType: 'application/json; charset=utf-8',
-      dataType: 'json',
-      headers: {
-          'X-CSRFToken': '{{  csrf_token }}'
-      },
-      data: jsPsych.data.get().json(),
-      success: function(output) {
-        console.log(output);
-        if (SSI_ids[1] == 'test') { throw new Error(reason);
-        } else {  window.location.replace("http://dkr1.ssisurveys.com/projects/end?rst=2&psid="+SSI_ids[0]); // URL for SSI redirect
-        }
+  $.ajax({
+    type: 'post',
+    cache: false,
+    dataType: 'text',
+    url: 'datacollector/',
+    contentType: 'application/json; charset=utf-8',
+    headers: {
+        'X-CSRFToken': '{{  csrf_token }}'
+    },
+    data: jsPsych.data.get().json(),
+    error: function(output, textStatus) {
+      console.log(textStatus);
+    },
+    success: function(output) {
+      console.log(output);
+      if (SSI_ids[1] != 'test') {
+        alert(reason);
+        window.location.replace("http://dkr1.ssisurveys.com/projects/end?rst=2&psid="+SSI_ids[0]); // URL for SSI redirect
+      } else {
+        alert(reason); // redirect kills the script, nothing else I found could do it so it will just loop here
       }
-    });
+    }
+  });
 }
 // if nothing passed just kill the script
 if (SSI_ids[0] == null || SSI_ids[1] == null) { kill("SSI url variables not present, will not execute study."); }
@@ -339,17 +344,22 @@ jsPsych.init({
     $.ajax({
       type: 'post',
       cache: false,
+      dataType: 'text',
       url: 'datacollector/',
       contentType: 'application/json; charset=utf-8',
-      dataType: 'json',
       headers: {
           'X-CSRFToken': '{{  csrf_token }}'
       },
       data: jsPsych.data.get().json(),
-      success: function(output) { 
+      error: function(output, textStatus) {
+        console.log(textStatus);
+      },
+      success: function(output) {
         console.log(output);
         if (SSI_ids[1] != 'test') {
           window.location.replace("http://dkr1.ssisurveys.com/projects/end?rst=1&psid="+SSI_ids[0]+"&basic="+basicCode); // URL for SSI redirect
+        } else {
+          alert("completion redirect would be triggered now in non-test context")
         }
       }
     });
