@@ -16,6 +16,7 @@ body {
 .interaction {
   display: block;
   position: absolute;
+  z-index: 200;
 }
 
 #download-now {
@@ -53,6 +54,15 @@ body {
   height: 26px;
   top: 98px;
   left: 1092px;
+}
+
+#library-doorhanger {
+  display: block;
+  position: absolute;
+  width: 324px;
+  height: 483px;
+  top: 133px;
+  left: 799px;
 }
 
 .hint {
