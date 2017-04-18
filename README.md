@@ -88,7 +88,7 @@ Alternatively, you can use [Docker](http://docker.com/):
 
 This app runs on Heroku. Commits to the `mozilla/braingames` `master` branch get
 automatically deployed
-to [`moz-braingames-stage`](https://moz-braingames-stage.herokuapp.com) if the
+to [`braingames-stage`](https://bg-stage.herokuapp.com/) if the
 Travis-CI tests pass.
 
 Via the Heroku UI and the `moz-braingames` pipeline, releases can be promoted
