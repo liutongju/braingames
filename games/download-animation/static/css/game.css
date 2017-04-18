@@ -56,15 +56,6 @@ body {
   left: 1092px;
 }
 
-#library-doorhanger {
-  display: block;
-  position: absolute;
-  width: 324px;
-  height: 483px;
-  top: 133px;
-  left: 799px;
-}
-
 .hint {
   top: 33px;
   position: absolute;

@@ -19,7 +19,6 @@
     <div id="library" class="interaction">
       <div class="hint hidden">library</div>
     </div>
-    <div id="library-doorhanger"></div>
     <video id="video-test" preload="auto" width="1366" height="768"></video>
     <div id="step-complete" class="hidden">
       <h1>Animation completed!</h1>
@@ -94,26 +93,9 @@
         vid.play();
         timeouts.push(setTimeout(function() {
           vid.pause();
-          vid.currentTime = 11;
           stepComplete();
-          library.onclick = null;
-        }, 2300));
+        }, 2200));
       });
-
-      // user *may* click the library icon instead while searching for bookmarks
-      library.onclick = function() {
-        vid.currentTime = 12;
-        setTimeout(function() {
-          video_wrapper.addEventListener('click', function(e) {
-            if (e.target.id != 'library-doorhanger') {
-              document.getElementById('library-doorhanger').classList.add('hidden');
-              video_wrapper.removeEventListener('click', arguments.callee);
-              vid.currentTime = 8;
-            }
-          });
-        }, 100);
-      };
-
     }
 
     let startup = function() {
