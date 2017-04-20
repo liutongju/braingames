@@ -1,0 +1,75 @@
+.hidden {
+  display: none !important;
+}
+
+.jspsych-display-element {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  text-align: center;
+}
+
+body {
+  background-color: #D4D4D4;
+  font-family: sans-serif;
+}
+
+.interaction {
+  display: block;
+  position: absolute;
+  z-index: 200;
+}
+
+#bookmark {
+  width: 25px;
+  height: 26px;
+  top: 98px;
+  left: 904px;
+}
+
+#downloads {
+  width: 25px;
+  height: 26px;
+  top: 98px;
+  left: 1064px;
+}
+
+#library {
+  width: 25px;
+  height: 26px;
+  top: 98px;
+  left: 1092px;
+}
+
+.hint {
+  top: 33px;
+  position: absolute;
+  background-color: #F0F0F0;
+  border: black 1px solid;
+  line-height: 1.2em;
+  font-size: .7em;
+  padding: 1px 5px;
+  border-radius: 2px;
+  left: -6px;
+}
+
+#jspsych-survey-text-0, #jspsych-survey-likert-form {
+  display: block;
+  margin: auto;
+  width: 50%;
+  text-align: left;
+}
+
+#jspsych-survey-text-0 input {
+  width: 340px;
+  padding: 6px;
+}
+
+#jspsych-survey-text-next, #jspsych-survey-likert-next {
+  display: block;
+  margin-left: 25%;
+  margin-top: 50px;
+}
+
+
+
