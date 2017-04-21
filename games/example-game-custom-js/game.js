@@ -109,7 +109,7 @@ jsPsych.init({
             cache: false,
             url: 'datacollector/',
             contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
+            dataType: 'text',
             headers: {
                 'X-CSRFToken': '{{  csrf_token }}'
             },

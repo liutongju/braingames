@@ -20,9 +20,9 @@ jsPsych.init({
           cache: false,
           url: 'datacollector/',
           contentType: 'application/json; charset=utf-8',
-          dataType: 'json',
+          dataType: 'text',
           headers: {
-              'X-CSRFToken': '{{ csrf }}'
+              'X-CSRFToken': '{{ csrf_token }}'
           },
           data: jsPsych.data.dataAsJSON(),
           success: function(output) { console.log(output); }
