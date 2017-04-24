@@ -7,46 +7,23 @@
 </head>
 <body>
   <div id="video-wrapper">
-    <button id="end-trial"></button>
-    <div id="reset" class="interaction"></div>
-    <div id="download-now" class="interaction"></div>
-    <div id="save-file" class="interaction hidden"></div>
-    <div id="bookmark" class="interaction">
-      <div class="hint hidden">bookmark</div>
-    </div>
-    <div id="downloads" class="interaction hidden">
-      <div class="hint hidden">downloads</div>
-    </div>
-    <div id="library" class="interaction">
-      <div class="hint hidden">library</div>
-    </div>
+    <div id="link-article" class="interaction"></div>
     <video id="video-test" preload="auto" width="1366" height="768"></video>
     <div id="step-complete" class="hidden">
       <h1>Animation completed!</h1>
-      <p>Press "Next" on the usertesting.com</p>
-      <p>instructions menu to continue</p>
+      <p>Would you like to watch it again?</p>
+      <button id="reset">Play again</button>
+      <button id="end-trial">Continue</button>
     </div>
   <div>
 
   <script type="text/javascript">
     var vid = document.getElementById('video-test');
-    // let download_now = document.getElementById('download-now');
-    // let save_file = document.getElementById('save-file');
-    // let video_wrapper = document.getElementById('video-wrapper');
-    // let bookmark = document.getElementById('bookmark');
-    // let library = document.getElementById('library');
-    // let downloads = document.getElementById('downloads');
-    // let step_complete = document.getElementById('step-complete');
-    // let reset = document.getElementById('reset');
-    // let timeouts = [];
-    //
-    // function oneTime(node, type, callback) {
-    // 	node.addEventListener(type, function(e) {
-    // 		e.target.removeEventListener(e.type, arguments.callee);
-    // 		return callback(e);
-    // 	});
-    // }
-    //
+    var link_article = document.getElementById('link-article');
+    var step_complete = document.getElementById('step-complete');
+    var reset = document.getElementById('reset');
+    var timeouts = [];
+
     // pre-load entire video
     var req = new XMLHttpRequest();
     req.open('GET', jsPsych.currentTrial().data.video_url, true);
@@ -61,82 +38,30 @@
     };
 
     req.send();
-    //
-    // let stepComplete = function(callback) {
-    //   timeouts.push(setTimeout(function() {
-    //     step_complete.classList.remove('hidden');
-    //     if (callback) {
-    //       oneTime(step_complete, 'click', function(e) {
-    //           step_complete.classList.add('hidden');
-    //           callback();
-    //       });
-    //     }
-    //   }, 1000));
-    // }
-    //
-    // let showHint = function (e)  {
-    //   this.children[0].classList.remove('hidden');
-    // };
-    //
-    // let hideHint = function () {
-    //   this.children[0].classList.add('hidden');
-    // };
-    //
-    // bookmark.addEventListener('mouseover', showHint);
-    // library.addEventListener('mouseover', showHint);
-    // downloads.addEventListener('mouseover', showHint);
-    // bookmark.addEventListener('mouseout', hideHint);
-    // library.addEventListener('mouseout', hideHint);
-    // downloads.addEventListener('mouseout', hideHint);
-    //
-    // let bookmarksClick = function() {
-    //   oneTime(bookmark, 'click', function(){
-    //     vid.play();
-    //     timeouts.push(setTimeout(function() {
-    //       vid.pause();
-    //       stepComplete();
-    //     }, 2200));
-    //   });
-    // }
-    //
-    // let startup = function() {
-    //   oneTime(download_now, 'click', () => {
-    //     download_now.classList.add('hidden');
-    //     save_file.classList.remove('hidden');
-    //     vid.currentTime = 1;
-    //   });
-    //
-    //   oneTime(save_file, 'click', () => {
-    //     save_file.classList.add('hidden');
-    //     vid.play();
-    //     timeouts.push(setTimeout(function() {
-    //       vid.pause();
-    //       downloads.classList.remove('hidden');
-    //       vid.currentTime = 8;
-    //       stepComplete(bookmarksClick);
-    //     }, 4500));
-    //   });
-    // }
-    //
-    // reset.onclick = function() {
-    //   bookmark.click();
-    //   for (var i = 0; i < timeouts.length; i++) {
-    //       clearTimeout(timeouts[i]);
-    //   }
-    //   vid.pause()
-    //   vid.currentTime = 0;
-    //   download_now.classList.remove('hidden');
-    //   save_file.classList.add('hidden');
-    //   downloads.classList.add('hidden');
-    //   step_complete.classList.add('hidden');
-    //   timeouts = [];
-    //   startup();
-    // }
-    //
-    // startup();
-    setTimeout(function(){
-      $('#end-trial').click();
-    }, 500)
+
+    var startup = function () {
+      link_article.onclick = function () {
+        link_article.onclick = null;
+        vid.play();
+        vid.onended = function(e) {
+          timeouts.push(setTimeout(function () {
+            step_complete.classList.remove('hidden');
+          }, 2000));
+        };
+      }
+      reset.onclick = function() {
+        console.log('reset clicked')
+        for (var i = 0; i < timeouts.length; i++) {
+            clearTimeout(timeouts[i]);
+        }
+        vid.currentTime = 0;
+        vid.pause();
+        step_complete.classList.add('hidden');
+        timeouts = [];
+        startup();
+      }
+    }
+    startup();
 
   </script>
 </body>
