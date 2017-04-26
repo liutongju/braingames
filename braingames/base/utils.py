@@ -22,6 +22,7 @@ def list_games():
 
     return games
 
+
 def gamestatic(game, path):
     path = urljoin('games/{}/'.format(game), path)
     return staticfiles_storage.url(path)
