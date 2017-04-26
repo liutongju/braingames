@@ -172,6 +172,10 @@ STATICFILES_FINDERS = [
     'braingames.base.finders.GameFinder',
 ]
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'braingames', 'static')
+]
+
 CACHES = {
     'default': config('REDIS_URL', default='locmem://', cast=django_cache_url.parse),
 }
