@@ -14,18 +14,13 @@ while (index2 == index) {
 }
 
 // question asked at the end of both trials comparing the two
-var likable_question = {
-  type: 'survey-multi-choice',
-  questions: ['which animation did you prefer? - or other comparison question'],
-  options: [['the first', 'the second']],
-  required: [true],
-  horizontal: true
-};
 
 var speed_question = {
   type: 'survey-multi-choice',
-  questions: ['The wait for the tab to load was: '],
-  options: [['1- Extremely slow', '2 - Slow', '3 - Somewhat slow', '4 - Neither slow nor fast', '5 - Somewhat fast', '6 - Fast', '7 - Extremely fast']],
+  questions: ['The wait for the tab to load was: ', 'The opening of the new tab was: ', 'The opening of the new tab was: '],
+  options: [['1- Extremely slow', '2 - Slow', '3 - Somewhat slow', '4 - Neither slow nor fast', '5 - Somewhat fast', '6 - Fast', '7 - Extremely fast'],
+            ['1- Extremely unresponsive', '2- Unresponsive', '3- Somewhat Unresponsive', '4- Neither unresponsive nor responsive', '5- Somewhat responsive', '6- Responsive', '7- Extremely responsive'],
+            ['1- Extremely unimaginative', '2- Unimaginative', '3- Somewhat unimaginative', '4- Neither unimaginative nor innovative', '5- Somewhat innovative', '6- Innovative', '7- Extremely innovative']],
   required: [true],
   horizontal: true
 };
@@ -53,7 +48,6 @@ var test_block = {
 
 var timeline = [];
 timeline.push(test_block);
-timeline.push(likable_question);
 timeline.push(username);
 
 var csrf = "{% csrf_token %}";
