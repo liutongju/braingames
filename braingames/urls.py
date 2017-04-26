@@ -5,7 +5,6 @@ from django.views.static import serve as static_serve
 
 from braingames.base import views
 
-
 urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^game/(?P<game>[\w-]+)/$', views.game, name='game'),
