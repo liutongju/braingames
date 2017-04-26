@@ -1,9 +1,9 @@
 'use strict';
 
-var video_options = [{version: 1, video_url: "{{ gamestatic('vid/loading_1.mp4') }}"},
-                     {version: 2, video_url: "{{ gamestatic('vid/loading_2.mp4') }}"},
-                     {version: 3, video_url: "{{ gamestatic('vid/loading_3.mp4') }}"},
-                     {version: 4, video_url: "{{ gamestatic('vid/loading_4.mp4') }}"},]
+var video_options = [{version: 1, video_url: "https://mozilla.github.io/braingames/videos/tab-load/loading_1.mp4"},
+                     {version: 2, video_url: "https://mozilla.github.io/braingames/videos/tab-load/loading_2.mp4"},
+                     {version: 3, video_url: "https://mozilla.github.io/braingames/videos/tab-load/loading_3.mp4"},
+                     {version: 4, video_url: "https://mozilla.github.io/braingames/videos/tab-load/loading_4.mp4"},]
 
 var index = Math.floor(Math.random() * video_options.length);
 var index2 = Math.floor(Math.random() * video_options.length);
@@ -17,7 +17,7 @@ while (index2 == index) {
 var likable_question = {
   type: 'survey-multi-choice',
   questions: ['which animation did you prefer? - or other comparison question'],
-  options: [['the first', 'the second']], 
+  options: [['the first', 'the second']],
   required: [true],
   horizontal: true
 };
@@ -37,7 +37,7 @@ var username = {
 
 var video_options = [
   // one control version
-  {data: {version: 5, video_url: "{{ gamestatic('vid/loading_5_current.mp4') }}"}, timeline: [{}, speed_question] },
+  {data: {version: 5, video_url: "https://mozilla.github.io/braingames/videos/tab-load/loading_5_current.mp4"}, timeline: [{}, speed_question] },
   // two of the test versions
   {data: video_options[index], timeline: [{}, speed_question] },
   {data: video_options[index2], timeline: [{}, speed_question] },
