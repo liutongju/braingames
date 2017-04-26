@@ -9,11 +9,10 @@ var loading_video_options = [{treatment_type: "page load", version: 1, video_url
                              {treatment_type: "page load", version: 4, video_url: "https://mozilla.github.io/braingames/videos/tab-load/loading_4.mp4"},];
 
 var index = Math.floor(Math.random() * loading_video_options.length);
-var index2 = Math.floor(Math.random() * loading_video_options.length);
-
-// not optimal, but to ensure we have two different test varients
-while (index2 == index) {
-  index2 = Math.floor(Math.random() * loading_video_options.length);
+// var index2 = Math.floor(Math.random() * loading_video_options.length);
+var index2 = Math.floor(Math.random() * loading_video_options.length - 1);
+if (index2 >= index) {
+  index2 = index2 + 1;
 }
 
 var new_tab_questions = {
