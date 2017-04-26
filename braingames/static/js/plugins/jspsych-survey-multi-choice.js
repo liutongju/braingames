@@ -1,7 +1,4 @@
 /**
-
- * WARNING: ERICA HAS EDITED THIS FOR BRAINGAMES
-
  * jspsych-survey-multi-choice
  * a jspsych plugin for multiple choice survey questions
  *
@@ -92,7 +89,7 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
 
       if (trial.required && trial.required[i]) {
         // add "question required" asterisk
-        // $(question_selector + " p").append("<span class='required'>*</span>")
+        $(question_selector + " p").append("<span class='required'>*</span>")
 
         // add required property
         $(question_selector + " input:radio").prop("required", true);
@@ -104,7 +101,7 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
       'type': 'submit',
       'id': plugin_id_name + '-next',
       'class': plugin_id_name + ' jspsych-btn',
-      'value': 'Submit'
+      'value': 'Submit Answers'
     }));
 
     $trial_form.submit(function(event) {

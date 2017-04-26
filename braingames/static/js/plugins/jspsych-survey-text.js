@@ -1,7 +1,4 @@
 /**
-
- * WARNING: ERICA HAS EDITED THIS FOR BRAINGAMES
-
  * jspsych-survey-text
  * a jspsych plugin for free response survey questions
  *
@@ -57,7 +54,7 @@ jsPsych.plugins['survey-text'] = (function() {
       $("#jspsych-survey-text-" + i).append('<p class="jspsych-survey-text">' + trial.questions[i] + '</p>');
 
       // add text box
-      $("#jspsych-survey-text-" + i).append('<input name="#jspsych-survey-text-response-' + i + '" cols="' + trial.columns[i] + '" rows="' + trial.rows[i] + '"></input>');
+      $("#jspsych-survey-text-" + i).append('<textarea name="#jspsych-survey-text-response-' + i + '" cols="' + trial.columns[i] + '" rows="' + trial.rows[i] + '"></textarea>');
     }
 
     // add submit button
@@ -65,14 +62,8 @@ jsPsych.plugins['survey-text'] = (function() {
       'id': 'jspsych-survey-text-next',
       'class': 'jspsych-btn jspsych-survey-text'
     }));
-    $("#jspsych-survey-text-next").html('Submit');
-
+    $("#jspsych-survey-text-next").html('Submit Answers');
     $("#jspsych-survey-text-next").click(function() {
-      if ($('#jspsych-survey-text-0').children('input').val() == '') {
-        alert("Please enter your usertesting.com username.")
-        $('#jspsych-survey-text-0').children('input').focus();
-        return;
-      }
       // measure response time
       var endTime = (new Date()).getTime();
       var response_time = endTime - startTime;
@@ -81,7 +72,7 @@ jsPsych.plugins['survey-text'] = (function() {
       var question_data = {};
       $("div.jspsych-survey-text-question").each(function(index) {
         var id = "Q" + index;
-        var val = $(this).children('input').val();
+        var val = $(this).children('textarea').val();
         var obje = {};
         obje[id] = val;
         $.extend(question_data, obje);
