@@ -8,7 +8,7 @@
 <body>
   <div id="video-wrapper">
     <div id="link-article" class="interaction"></div>
-    <video id="video-test" preload="auto" width="1366" height="768"></video>
+    <video id="video-test" preload="auto" width="1366" height="768" class="hidden"></video>
     <div id="step-complete" class="hidden">
       <h1>Animation completed!</h1>
       <p>Would you like to watch it again?</p>
@@ -25,32 +25,22 @@
     var timeouts = [];
 
     // pre-load entire video
-    var req = new XMLHttpRequest();
-    req.open('GET', jsPsych.currentTrial().data.video_url, true);
-    req.responseType = 'blob';
+    vid.src = jsPsych.currentTrial().data.video_url;
+    vid.load();
 
-    req.onload = function() {
-      if (this.status === 200) {
-        let videoBlob = this.response;
-        let v = URL.createObjectURL(videoBlob);
-        vid.src = v;
-      }
-    };
-
-    req.send();
+    vid.addEventListener('loadeddata', function(e){
+      vid.classList.remove('hidden');
+    });
 
     var startup = function () {
       link_article.onclick = function () {
         link_article.onclick = null;
         vid.play();
-        vid.onended = function(e) {
-          timeouts.push(setTimeout(function () {
-            step_complete.classList.remove('hidden');
-          }, 2000));
+        vid.onended = function () {
+          step_complete.classList.remove('hidden');
         };
       }
       reset.onclick = function() {
-        console.log('reset clicked')
         for (var i = 0; i < timeouts.length; i++) {
             clearTimeout(timeouts[i]);
         }
