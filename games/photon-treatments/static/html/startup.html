@@ -7,51 +7,51 @@
 </head>
 <body>
   <div id="video-wrapper">
-    <div id="link-article" class="interaction"></div>
+    <div id="click-target" class="interaction"></div>
     <video id="video-test" preload="auto" width="1366" height="768" class="hidden"></video>
     <div id="step-complete" class="hidden">
       <h1>Animation completed!</h1>
       <p>Would you like to watch it again?</p>
-      <button id="reset">Play again</button>
+      <button id="reset">Review</button>
       <button id="end-trial">Continue</button>
     </div>
   <div>
 
   <script type="text/javascript">
     var vid = document.getElementById('video-test');
-    var link_article = document.getElementById('link-article');
+    var click_target = document.getElementById('click-target');
     var step_complete = document.getElementById('step-complete');
     var reset = document.getElementById('reset');
     var timeouts = [];
 
+    click_target.classList.toggle('new-tab', jsPsych.currentTrial().data.treatment_type === 'new tab');
+    click_target.classList.toggle('current', jsPsych.currentTrial().data.version === 3 && jsPsych.currentTrial().data.treatment_type === 'new tab');
+
     // pre-load entire video
     vid.src = jsPsych.currentTrial().data.video_url;
     vid.load();
-
     vid.addEventListener('loadeddata', function(e){
       vid.classList.remove('hidden');
     });
 
-    var startup = function () {
-      link_article.onclick = function () {
-        link_article.onclick = null;
-        vid.play();
-        vid.onended = function () {
-          step_complete.classList.remove('hidden');
-        };
+    reset.onclick = function() {
+      for (var i = 0; i < timeouts.length; i++) {
+          clearTimeout(timeouts[i]);
       }
-      reset.onclick = function() {
-        for (var i = 0; i < timeouts.length; i++) {
-            clearTimeout(timeouts[i]);
-        }
-        vid.currentTime = 0;
-        vid.pause();
-        step_complete.classList.add('hidden');
-        timeouts = [];
-        startup();
-      }
+      click_target.classList.remove('hidden');
+      vid.currentTime = 0;
+      vid.pause();
+      step_complete.classList.add('hidden');
+      timeouts = [];
     }
-    startup();
+
+    click_target.onclick = function () {
+      click_target.classList.add('hidden');
+      vid.play();
+      vid.onended = function () {
+        step_complete.classList.remove('hidden');
+      };
+    }
 
   </script>
 </body>

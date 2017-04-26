@@ -37,11 +37,30 @@ body {
   margin-top: 50px;
 }
 
-#link-article {
+#click-target {
   width: 395px;
   height: 442px;
   top: 277px;
   left: 314px;
+}
+
+#click-target.new-tab {
+  width: 24px;
+  height: 24px;
+  top: 16px;
+  left: 364px;
+}
+
+#click-target.new-tab.current {
+  width: 40px;
+  height: 32px;
+  top: 12px;
+  left: 356px;
+}
+
+#click-target.new-tab:hover {
+  background: #fff;
+  opacity: 0.2;
 }
 
 #step-complete {
