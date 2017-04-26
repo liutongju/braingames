@@ -51,6 +51,13 @@ body {
   left: 364px;
 }
 
+#click-target.new-tab.current {
+  width: 40px;
+  height: 32px;
+  top: 12px;
+  left: 356px;
+}
+
 #click-target.new-tab:hover {
   background: #fff;
   opacity: 0.2;
