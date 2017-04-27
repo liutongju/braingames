@@ -3,11 +3,15 @@
 {% block page_title %}Download Animation{% endblock %}
 
 {% block header %}
+  <link href="{{ gamestatic('css/jspsych.css') }}" rel="stylesheet" />
   <link rel="stylesheet" href="{{ gamestatic('css/game.css') }}"/>
-  <script src="{{ static('js/plugins/jspsych-html.js') }}"></script>
-  <script src="{{ static('js/plugins/jspsych-survey-multi-choice.js') }}"></script>
+  <script src="{{ gamestatic('js/jspsych.js') }}"></script>
+  <script src="{{ gamestatic('js/plugins/jspsych-html.js') }}"></script>
+  <script src="{{ gamestatic('js/plugins/jspsych-survey-multi-choice.js') }}"></script>
 {% endblock %}
 
 {% block game_script %}
   {% include 'download-animation/game.js' %}
 {% endblock %}
+
+
