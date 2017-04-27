@@ -67,20 +67,13 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
         '<p class="' + plugin_id_name + '-text survey-multi-choice">' + trial.questions[i] + '</p>'
       );
 
-      $(question_selector).append($('<div>', {
-        "id": _join("multi-choice-answers", i),
-        "class": "multi-choice-answers"
-      }));
-
-      var answers_container = _join("#multi-choice-answers", i);
-
       // create option radio buttons
       for (var j = 0; j < trial.options[i].length; j++) {
         var option_id_name = _join(plugin_id_name, "option", i, j),
           option_id_selector = '#' + option_id_name;
 
         // add radio button container
-        $(answers_container).append($('<div>', {
+        $(question_selector).append($('<div>', {
           "id": option_id_name,
           "class": _join(plugin_id_name, 'option')
         }));
@@ -95,8 +88,11 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
       }
 
       if (trial.required && trial.required[i]) {
+        // add "question required" asterisk
+        $(question_selector + " p").append("<span class='required'>*</span>")
+
         // add required property
-        $(answers_container + " input:radio").prop("required", true);
+        $(question_selector + " input:radio").prop("required", true);
       }
     }
 
@@ -105,7 +101,7 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
       'type': 'submit',
       'id': plugin_id_name + '-next',
       'class': plugin_id_name + ' jspsych-btn',
-      'value': 'Submit'
+      'value': 'Submit Answers'
     }));
 
     $trial_form.submit(function(event) {
