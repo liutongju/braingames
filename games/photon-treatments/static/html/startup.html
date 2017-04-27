@@ -29,7 +29,7 @@
     var reset = document.getElementById('reset');
     var timeouts = [];
 
-    document.getElementById('progress').innerHTML = 'set: ' + Math.ceil(counter / 6) + '/2, trial: ' + Math.ceil(counter % 6 / 2) + '/3 ';
+    document.getElementById('progress').innerHTML = `set: ${Math.ceil(counter / 6)}/2, trial:  ${Math.ceil(counter % 6 / 2)}/3`;
 
     click_target.classList.toggle('new-tab', jsPsych.currentTrial().data.treatment_type === 'new tab');
     click_target.classList.toggle('current', jsPsych.currentTrial().data.version === 3 && jsPsych.currentTrial().data.treatment_type === 'new tab');
@@ -69,14 +69,14 @@
                                     <li>For each variation, click to open a new tab and pay close attention to the new tab opening.</li>
                                     <li>If you would like to review the design variation, please click the “review” button.</li>
                                     <li>After you complete viewing the variation, you will be asked three short questions.</li>
-                                  </ul>` + instructions.innerHTML;
+                                  </ul> ${instructions.innerHTML}`;
       } else {
         instructions.innerHTML = `<p>We are going to show three design variations for loading a new web page in a web browser.</p>
                                   <ul>
                                     <li>For each variation, click on the article about Singapore and pay close attention to the tab loading.</li>
                                     <li>If you would like to review the design variation, please click the “review” button.</li>
                                     <li>After you complete viewing the variation, you will be asked three short questions.</li>
-                                  </ul>` + instructions.innerHTML;
+                                  </ul> ${instructions.innerHTML}`;
       }
       instructions.classList.remove('hidden');
       var confirm_instructions = document.getElementById('confirm-instructions');

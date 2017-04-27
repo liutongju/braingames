@@ -101,7 +101,7 @@ body {
   position: absolute;
   top: 165px;
   background: white;
-  right: 250px;
+  right: 150px;
   padding: 0 20px;
   z-index: 400;
 }
@@ -135,6 +135,7 @@ body {
   right: 40px;
   background: white;
   padding: 5px;
+  border: 1px #80808066 solid;
 }
 
 .jspsych-survey-multi-choice-question {
