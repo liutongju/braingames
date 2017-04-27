@@ -92,9 +92,18 @@ body {
 }
 
 .jspsych-survey-multi-choice-question {
-    display: flex;
-    width: 100%;
-    margin-bottom: 5em;
+  width: 100%;
+  margin-bottom: 7em;
+}
+
+.jspsych-survey-multi-choice-text.survey-multi-choice {
+  text-align: left;
+  margin-inline-start: 9%;
+}
+
+.multi-choice-answers {
+  display: flex;
+  margin: 0 9%;
 }
 
 .jspsych-survey-multi-choice-horizontal .jspsych-survey-multi-choice-text {
@@ -104,6 +113,16 @@ body {
 
 .jspsych-survey-multi-choice-horizontal .jspsych-survey-multi-choice-option {
   flex: 1;
+  margin-left: 0.4em;
+  margin-right: 0.4em;
+}
+
+.jspsych-survey-multi-choice-horizontal .jspsych-survey-multi-choice-option:first-child {
+  margin-left: 0
+}
+
+.jspsych-survey-multi-choice-horizontal .jspsych-survey-multi-choice-option:last-child {
+  margin-left: 0
 }
 
 .jspsych-survey-multi-choice-horizontal .jspsych-survey-multi-choice-option .jspsych-survey-multi-choice-text {
@@ -111,6 +130,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: normal;
 }
