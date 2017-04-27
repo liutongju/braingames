@@ -44,7 +44,7 @@ body {
   left: 314px;
 }
 
-#click-target:not(.new-tab) {
+#click-target:not(.new-tab):not(.firstrun) {
   cursor: pointer;
 }
 
@@ -62,7 +62,7 @@ body {
   left: 356px;
 }
 
-#click-target.new-tab:hover {
+#click-target.new-tab:hover:not(.firstrun) {
   background: #fff;
   opacity: 0.2;
 }
@@ -93,6 +93,49 @@ body {
 #thank-you {
   width: 50%;
   margin: 100px auto;
+}
+
+#instructions {
+  width: 32%;
+  border: 1px black solid;
+  position: absolute;
+  top: 165px;
+  background: white;
+  right: 150px;
+  padding: 0 20px;
+  z-index: 400;
+}
+
+#click-target.firstrun.new-tab {
+  top: 0;
+  left: 0;
+  width: 52px;
+  height: 44px;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  border-width: 6px 110vw 120vh 350px;
+}
+
+#click-target.firstrun:not(.new-tab) {
+  top: 0;
+  left: 0;
+  width: 395px;
+  height: 442px;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  border-width: 277px 110vw 120vh 314px;
+}
+
+#confirm-instructions {
+  margin-bottom: 10px;
+  float: right;
+}
+
+#progress {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  background: white;
+  padding: 5px;
+  border: 1px #80808066 solid;
 }
 
 .jspsych-survey-multi-choice-question {

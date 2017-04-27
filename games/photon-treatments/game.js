@@ -14,6 +14,11 @@ var index2 = Math.floor(Math.random() * loading_video_options.length - 1);
 if (index2 >= index) {
   index2 = index2 + 1;
 }
+var counter = 0;
+
+let increment = function() {
+  counter++;
+}
 
 var new_tab_questions = {
   type: 'survey-multi-choice',
@@ -80,6 +85,9 @@ var end_message = `<div id="thank-you">Thanks for completing the survey! <br> Pl
 /* start the experiment */
 jsPsych.init({
   timeline: timeline,
+  on_trial_start: function(){
+    increment();
+  },
   on_finish: function() {
     jsPsych.endExperiment(end_message);
     $.ajax({
