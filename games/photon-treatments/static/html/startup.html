@@ -7,6 +7,7 @@
 </head>
 <body>
   <div id="video-wrapper">
+    <div id="progress"></div>
     <div id="click-target" class="interaction"></div>
     <video id="video-test" preload="auto" width="1366" height="768" class="hidden"></video>
     <div id="step-complete" class="hidden">
@@ -27,6 +28,8 @@
     var step_complete = document.getElementById('step-complete');
     var reset = document.getElementById('reset');
     var timeouts = [];
+
+    document.getElementById('progress').innerHTML = 'set: ' + Math.ceil(counter / 6) + '/2, trial: ' + Math.ceil(counter % 6 / 2) + '/3 ';
 
     click_target.classList.toggle('new-tab', jsPsych.currentTrial().data.treatment_type === 'new tab');
     click_target.classList.toggle('current', jsPsych.currentTrial().data.version === 3 && jsPsych.currentTrial().data.treatment_type === 'new tab');

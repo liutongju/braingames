@@ -129,6 +129,14 @@ body {
   float: right;
 }
 
+#progress {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  background: white;
+  padding: 5px;
+}
+
 .jspsych-survey-multi-choice-question {
   width: 100%;
   margin-bottom: 6em;
