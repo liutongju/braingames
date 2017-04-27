@@ -15,9 +15,13 @@
       <button id="reset">Review</button>
       <button id="end-trial">Continue</button>
     </div>
+    <div id="instructions" class="hidden">
+      <button id="confirm-instructions"> Got it </button>
+    </div>
   <div>
 
   <script type="text/javascript">
+    var instructions = document.getElementById('instructions');
     var vid = document.getElementById('video-test');
     var click_target = document.getElementById('click-target');
     var step_complete = document.getElementById('step-complete');
@@ -51,6 +55,38 @@
       vid.onended = function () {
         step_complete.classList.remove('hidden');
       };
+    }
+
+    var firstrun = function () {
+      var saved_click = click_target.onclick;
+      click_target.onclick = null;
+      if (jsPsych.currentTrial().data.treatment_type === 'new tab') {
+        instructions.innerHTML = `<p>We are going to show three design variations for opening a new tab in a web browser.</p>
+                                  <ul>
+                                    <li>For each variation, click to open a new tab and pay close attention to the new tab opening.</li>
+                                    <li>If you would like to review the design variation, please click the “review” button.</li>
+                                    <li>After you complete viewing the variation, you will be asked three short questions.</li>
+                                  </ul>` + instructions.innerHTML;
+      } else {
+        instructions.innerHTML = `<p>We are going to show three design variations for loading a new web page in a web browser.</p>
+                                  <ul>
+                                    <li>For each variation, click on the article about Singapore and pay close attention to the tab loading.</li>
+                                    <li>If you would like to review the design variation, please click the “review” button.</li>
+                                    <li>After you complete viewing the variation, you will be asked three short questions.</li>
+                                  </ul>` + instructions.innerHTML;
+      }
+      instructions.classList.remove('hidden');
+      var confirm_instructions = document.getElementById('confirm-instructions');
+      confirm_instructions.onclick = function() {
+        instructions.classList.add('hidden');
+        click_target.classList.remove('firstrun');
+        click_target.onclick = saved_click;
+      }
+      click_target.classList.add('firstrun');
+    }
+
+    if (jsPsych.data.getLastTrialData() == {} || jsPsych.data.getLastTrialData().treatment_type != jsPsych.currentTrial().data.treatment_type) {
+      firstrun();
     }
 
   </script>
