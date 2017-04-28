@@ -45,7 +45,7 @@ var username = {
   questions: [`<p>Please enter your usertesting.com username.</p><p> We are only collecting this information to know that you have completed the study here.</p>`],
 };
 
-var loading_video_options = {
+var loading_games = {
   randomize_order: true,
   timeline: [
     // one control version
@@ -56,7 +56,7 @@ var loading_video_options = {
   ]
 };
 
-var new_tab_video_options = {
+var new_tab_games = {
   randomize_order: true,
   timeline: [
     // one control version
@@ -68,7 +68,7 @@ var new_tab_video_options = {
 };
 
 var test_block = {
-  timeline: [new_tab_video_options, loading_video_options],
+  timeline: [new_tab_games, loading_games],
   type: 'html',
   url: "{{ gamestatic('html/startup.html') }}",
   cont_btn: 'end-trial',
