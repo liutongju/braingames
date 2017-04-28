@@ -26,6 +26,7 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
     trial.preamble = typeof trial.preamble == 'undefined' ? "" : trial.preamble;
     trial.required = typeof trial.required == 'undefined' ? null : trial.required;
     trial.horizontal = typeof trial.required == 'undefined' ? false : trial.horizontal;
+    trial.treatment_type = typeof trial.treatment_type == 'undefined' ? false : trial.treatment_type;
 
     // if any trial variables are functions
     // this evaluates the function and replaces
@@ -33,8 +34,14 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
     trial = jsPsych.pluginAPI.evaluateFunctionParameters(trial);
 
     // form element
+    var outer_body = '#outer-body';
+    display_element.append($('<div>', {
+      "id": 'outer-body',
+      "treatment": trial.treatment_type,
+    }));
+
     var trial_form_id = _join(plugin_id_name, "form");
-    display_element.append($('<form>', {
+    $('#outer-body').append($('<form>', {
       "id": trial_form_id
     }));
     var $trial_form = $("#" + trial_form_id);

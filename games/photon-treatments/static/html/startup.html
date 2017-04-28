@@ -7,32 +7,34 @@
 </head>
 <body>
   <div id="video-wrapper">
-    <div id="progress"></div>
     <div id="click-target" class="interaction"></div>
     <video id="video-test" preload="auto" width="1366" height="768" class="hidden"></video>
     <div id="step-complete" class="hidden">
       <h1>Animation completed!</h1>
       <p>Would you like to watch it again?</p>
-      <button id="reset">Review</button>
-      <button id="end-trial">Continue</button>
+      <button id="reset">REVIEW</button>
+      <button id="end-trial">CONTINUE</button>
     </div>
-    <div id="instructions" class="hidden">
-      <button id="confirm-instructions"> Got it </button>
+    <div id="instructions">
+      <div id="progress"></div>
+      <div id="instructions-text"></div>
+      <button id="confirm-instructions" class="hidden"> START </button>
     </div>
   <div>
 
   <script type="text/javascript">
     var instructions = document.getElementById('instructions');
+    var instructions_text = document.getElementById('instructions-text');
     var vid = document.getElementById('video-test');
     var click_target = document.getElementById('click-target');
     var step_complete = document.getElementById('step-complete');
     var reset = document.getElementById('reset');
     var timeouts = [];
 
-    document.getElementById('progress').innerHTML = `set: ${Math.ceil(counter / 6)}/2, trial:  ${Math.ceil(counter % 6 / 2)}/3`;
+    document.getElementById('progress').innerHTML = `SET ${Math.ceil(counter / 6)}/2: TASK  ${Math.ceil(counter % 6 / 2)}/3`;
 
-    click_target.classList.toggle('new-tab', jsPsych.currentTrial().data.treatment_type === 'new tab');
-    click_target.classList.toggle('current', jsPsych.currentTrial().data.version === 3 && jsPsych.currentTrial().data.treatment_type === 'new tab');
+    click_target.classList.toggle('new-tab', jsPsych.currentTrial().data.treatment_type === 'new-tab');
+    click_target.classList.toggle('current', jsPsych.currentTrial().data.version === 3 && jsPsych.currentTrial().data.treatment_type === 'new-tab');
 
     // pre-load entire video
     vid.src = jsPsych.currentTrial().data.video_url;
@@ -60,28 +62,29 @@
       };
     }
 
+
+    if (jsPsych.currentTrial().data.treatment_type === 'new-tab') {
+      instructions_text.innerHTML = `<p>We are going to show three design variations for opening a new tab in a web browser.</p>
+                                <ul>
+                                  <li>For each variation, click to open a new tab and <b>pay close attention to the new tab opening.</b></li>
+                                  <li>If you would like to review the design variation, please click the “review” button.</li>
+                                  <li>After you complete viewing the variation, you will be asked three short questions.</li>
+                                </ul>`;
+    } else {
+      instructions_text.innerHTML = `<p>We are going to show three design variations for loading a new web page in a web browser.</p>
+                                <ul>
+                                  <li>For each variation, click on the article about Singapore and <b>pay close attention to the tab loading.</b></li>
+                                  <li>If you would like to review the design variation, please click the “review” button.</li>
+                                  <li>After you complete viewing the variation, you will be asked three short questions.</li>
+                                </ul>`;
+    }
     var firstrun = function () {
       var saved_click = click_target.onclick;
       click_target.onclick = null;
-      if (jsPsych.currentTrial().data.treatment_type === 'new tab') {
-        instructions.innerHTML = `<p>We are going to show three design variations for opening a new tab in a web browser.</p>
-                                  <ul>
-                                    <li>For each variation, click to open a new tab and pay close attention to the new tab opening.</li>
-                                    <li>If you would like to review the design variation, please click the “review” button.</li>
-                                    <li>After you complete viewing the variation, you will be asked three short questions.</li>
-                                  </ul> ${instructions.innerHTML}`;
-      } else {
-        instructions.innerHTML = `<p>We are going to show three design variations for loading a new web page in a web browser.</p>
-                                  <ul>
-                                    <li>For each variation, click on the article about Singapore and pay close attention to the tab loading.</li>
-                                    <li>If you would like to review the design variation, please click the “review” button.</li>
-                                    <li>After you complete viewing the variation, you will be asked three short questions.</li>
-                                  </ul> ${instructions.innerHTML}`;
-      }
-      instructions.classList.remove('hidden');
       var confirm_instructions = document.getElementById('confirm-instructions');
+      confirm_instructions.classList.remove('hidden');
       confirm_instructions.onclick = function() {
-        instructions.classList.add('hidden');
+        confirm_instructions.disabled = true;
         click_target.classList.remove('firstrun');
         click_target.onclick = saved_click;
       }
