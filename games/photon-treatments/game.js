@@ -61,7 +61,7 @@ var new_tab_games = {
   randomize_order: true,
   timeline: [
     // one control version
-    {data: {treatment_type: "new tab", version: 3, video_url: "https://mozilla.github.io/braingames/videos/new-tab/new_tab_3_current.mp4"}, timeline: [{}, new_tab_questions] },
+    {data: {treatment_type: "new-tab", version: 3, video_url: "https://mozilla.github.io/braingames/videos/new-tab/new_tab_3_current.mp4"}, timeline: [{}, new_tab_questions] },
     // the two test versions
     {data: new_tab_video_options[0], timeline: [{}, new_tab_questions] },
     {data: new_tab_video_options[1], timeline: [{}, new_tab_questions] },
