@@ -7,7 +7,7 @@
 </head>
 <body>
   <div id="video-wrapper">
-    <div id="click-target" class="interaction"></div>
+    <div id="click-target" class="interaction" class="hidden"></div>
     <video id="video-test" preload="auto" width="1366" height="768" class="hidden"></video>
     <div id="step-complete" class="hidden">
       <h1>Animation completed!</h1>
@@ -25,11 +25,13 @@
   <script type="text/javascript">
     var instructions = document.getElementById('instructions');
     var instructions_text = document.getElementById('instructions-text');
+    var confirm_instructions = document.getElementById('confirm-instructions');
     var vid = document.getElementById('video-test');
     var click_target = document.getElementById('click-target');
     var step_complete = document.getElementById('step-complete');
     var reset = document.getElementById('reset');
     var timeouts = [];
+    var show_overlay = (jsPsych.data.getLastTrialData() == {} || jsPsych.data.getLastTrialData().treatment_type != jsPsych.currentTrial().data.treatment_type);
 
     document.getElementById('progress').innerHTML = `SET ${Math.ceil(counter / 6)}/2: TASK  ${Math.ceil(counter % 6 / 2)}/3`;
 
@@ -38,15 +40,19 @@
 
     // pre-load entire video
     vid.src = jsPsych.currentTrial().data.video_url;
-    vid.load();
-    vid.addEventListener('loadeddata', function(e){
+    vid.addEventListener('canplaythrough', function(e){
       vid.classList.remove('hidden');
+      click_target.classList.remove('hidden');
+      if (show_overlay) {
+        confirm_instructions.classList.remove('hidden');
+      }
     });
 
     reset.onclick = function() {
       for (var i = 0; i < timeouts.length; i++) {
           clearTimeout(timeouts[i]);
       }
+      confirm_instructions.classList.add('hidden');
       click_target.classList.remove('hidden');
       vid.currentTime = 0;
       vid.pause();
@@ -61,7 +67,6 @@
         step_complete.classList.remove('hidden');
       };
     }
-
 
     if (jsPsych.currentTrial().data.treatment_type === 'new-tab') {
       instructions_text.innerHTML = `<p>We are going to show three design variations for opening a new tab in a web browser.</p>
@@ -81,7 +86,6 @@
     var firstrun = function () {
       var saved_click = click_target.onclick;
       click_target.onclick = null;
-      var confirm_instructions = document.getElementById('confirm-instructions');
       confirm_instructions.classList.remove('hidden');
       confirm_instructions.onclick = function() {
         confirm_instructions.disabled = true;
@@ -91,7 +95,7 @@
       click_target.classList.add('firstrun');
     }
 
-    if (jsPsych.data.getLastTrialData() == {} || jsPsych.data.getLastTrialData().treatment_type != jsPsych.currentTrial().data.treatment_type) {
+    if (show_overlay) {
       firstrun();
     }
 
