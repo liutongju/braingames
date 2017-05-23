@@ -14,14 +14,15 @@
   <script src="{{ gamestatic('js/plugins/jspsych-instructions.js') }}"></script>
   <script src="{{ gamestatic('js/plugins/jspsych-survey-text.js') }}"></script>
   <script src="{{ gamestatic('js/plugins/jspsych-survey-multi-choice.js') }}"></script>
+  <script src="{{ gamestatic('js/plugins/jspsych-text.js') }}"></script>
   <script src="{{ gamestatic('js/js.cookie.js') }}"></script>
 {% endblock %}
 
 {% block game_script %}
   {% if request.user_agent.is_mobile %}
-    {% include 'shrub/nomobile.js' %}
+    {% include 'shrub-ng/nomobile.js' %}
   {% else %}
-    {% include 'shrub/static/js/preloadVideo.js' %}
-    {% include 'shrub/game.js' %}
+    {% include 'shrub-ng/static/js/preloadVideo.js' %}
+    {% include 'shrub-ng/game.js' %}
   {% endif %}
 {% endblock %}

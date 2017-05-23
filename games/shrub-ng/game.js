@@ -3,7 +3,6 @@ var SSI_ids = [jsPsych.data.getURLVariable('psid'), jsPsych.data.getURLVariable(
 var basicCode = 40932;
 
 var cycles = 3;                        // how many iterations per stimulus for proper response averaging
-var score = 0, accY = 100, accN = -50; // keeping score
 
 // for some reason, (try to) shut it down
 function kill(reason) {
@@ -128,10 +127,7 @@ var instructions_block = {
     "<p>Press 'f' if the 1st clip loaded faster, 'j' if the 2nd clip loaded faster,<br>or space for the trials where the clips play at the same speed<br>(Answer screens remind you of the exact keys)</p>" +
     "<img src='{{ gamestatic('img/instAnswer.png') }}'></img> " + " <img src='{{ gamestatic('img/keyhands.jpg') }}'></img>" + "<p>Key responses keep the trials moving along quickly</p>",
 
-    "<p>Error tones are provided for feedback after each response<br>Get familiar with the correct and incorrect sounds below and adjust your volume:<br>" +
-    "Correct: <audio controls=1><source src={{ gamestatic('wav/pos.wav') }} type='audio/wav'></audio><br>" +
-    "Incorrect: <audio controls=2><source src={{ gamestatic('wav/neg.wav') }} type='audio/wav'></audio></p>" +
-    "<p>There are a total of "+all_trials.length+" trials to capture enough data for us to draw conclusions<br>At "+accY+" points for an accurate trial and "+accN+" for an error, there is a total of "+all_trials.length*accY+" points possible</p>" +
+    "<p>There are a total of "+all_trials.length+" trials to capture enough data for us to draw conclusions</p>" +
     "<p>The experiment begins beyond this final instruction screen, you will not be able to go backward from here</p>"
   ],
   on_finish: function() {
@@ -170,40 +166,8 @@ for(i = 0; i < all_trials.length; i += 1){
     on_finish: function(data) {
       // check accuracy
       jsPsych.data.addDataToLastTrial({ correct: data.key_press == data.correct_choice });
-    }
-  });
-  // error tone feedback - sometimes the sound doesn't play and requires a keypress to advance; rebooting fixes it :(
-  timeline.push({
-    type: 'single-audio',
-    stimulus: function(){
-      var correct = jsPsych.data.get().last(1).values()[0].correct;
-      if(correct){
-        return "{{ gamestatic('wav/pos.wav') }}";
-      } else {
-        return "{{ gamestatic('wav/neg.wav') }}";
-      }
     },
-    is_html: false,
-    trial_ends_after_audio: true
-  });
-  // feedback/score screen
-  timeline.push({
-    type: 'single-stim',
-    stimulus: function(){
-      var correct = jsPsych.data.get().last(2).values()[0].correct;
-      if(correct){
-        score += accY;
-        jsPsych.data.addDataToLastTrial({ score: score });
-        return "<p>Correct trial: Your score is now +"+accY+" = "+score+"</p>";
-      } else {
-        score += accN;
-        jsPsych.data.addDataToLastTrial({ score: score });        
-        return "<p>Incorrect trial: Your score is now "+accN+" = "+score+"</p>";
-      }
-    },
-    is_html: true,
-    timing_response: 2000,
-    choices: 'none'
+    timing_post_trial: 2000
   });
 }
 
@@ -282,7 +246,6 @@ var debrief_block = {
     return "<h1>Debriefing:</h1>" + "<p>The videos were edited strategically from the <b>same source</b> to be slower or faster on different trials</p>" +
     "<p>We're interested in knowing whether the browser you <i>thought</i> was loading the page affected how fast it <i>seemed</i> to you</p>" +
     "<br>" +
-    "<p>At "+accY+" points for an accurate trial and "+accN+" for an error, out of a total of "+all_trials.length+" trials you scored "+score+" points</p>"  +
     "<p>Please press any key to conclude - thank you for your participation!</p>";
   },
   timing_post_trial: 2000
@@ -300,7 +263,6 @@ jsPsych.data.addProperties({
 // arrays of files to be called at .init for preloading (if specified via callback)
 var images = ["{{ gamestatic('img/ChromeFirst.png') }}", "{{ gamestatic('img/FirefoxFirst.png') }}",  // answer screen images
               "{{ gamestatic('img/instAnswer.png') }}", "{{ gamestatic('img/keyhands.jpg') }}"];      // instruction screen images
-var sounds = ["{{ gamestatic('wav/pos.wav') }}", "{{ gamestatic('wav/neg.wav') }}"];                  // trial accuracy feedback sounds
 
 var csrf = "{% csrf_token %}";
 jsPsych.init({
@@ -308,7 +270,6 @@ jsPsych.init({
   fullscreen: true,
   show_progress_bar: true,
   preload_images: images,
-  preload_audio: sounds,
   on_trial_start: function() {
     jsPsych.data.addDataToLastTrial({ trialStart: Date.now() });  // get timestamp
   },
